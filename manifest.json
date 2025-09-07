@@ -1,0 +1,53 @@
+{
+  "manifest_version": 3,
+  "name": "Tester Auto Login By 3CAT",
+  "version": "1.0",
+  "description": "Auto login to different environments",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "tabs",
+    "cookies",
+    "scripting",
+    "browsingData"
+  ],
+  "host_permissions": [
+    "https://auth-sit.local-gov.dev/*",
+    "https://auth-uat.local-gov.dev/*",
+    "https://auth.localgov.ai/*"
+  ],
+  "optional_host_permissions": [
+    "https://auth-sit.local-gov.dev/*",
+    "https://auth-uat.local-gov.dev/*",
+    "https://auth.localgov.ai/*"
+  ],
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Auto Login Helper",
+    "default_icon": {
+      "16": "icon16.png",
+      "48": "icon48.png",
+      "128": "icon128.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://auth-sit.local-gov.dev/*",
+        "https://auth-uat.local-gov.dev/*",
+        "https://auth.localgov.ai/*",
+        "<all_urls>"
+      ],
+      "js": ["content.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  }
+}

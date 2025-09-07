@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>Extension</title>
+  <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+      body {
+        width: 380px;
+        height: 580px;
+        font-family: 'Inter', sans-serif;
+        background: linear-gradient(135deg, #1a1a1a 0%, #3a0ca3 50%, #7209b7 100%);
+        color: #ffffff;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .tab-menu {
+        display: flex;
+        background: rgba(255, 255, 255, 0.1);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .tab {
+        flex: 1;
+        text-align: center;
+        padding: 12px;
+        cursor: pointer;
+        font-weight: 500;
+        font-family: 'Inter', 'Roboto', sans-serif;
+        background: transparent;
+        transition: background 0.3s ease;
+      }
+
+      .tab:hover {
+        background: rgba(255, 255, 255, 0.15);
+      }
+
+      .tab.active {
+        background: rgba(255, 255, 255, 0.2);
+      }
+
+      .tab-content {
+        display: none;
+        padding: 15px;
+      }
+
+      .tab-content.active {
+        display: block;
+      }
+
+      .icon {
+        font-size: 32px;
+        text-align: center;
+      }
+
+      .fill-btn {
+        background: rgba(255, 255, 255, 0.12);
+        backdrop-filter: blur(10px);
+        color: #ffffff;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 22px 20px;
+        border-radius: 12px;
+        cursor: pointer;
+        font-size: 11px;
+        font-weight: 500;
+        font-family: 'Inter', sans-serif;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+        text-align: center;
+      }
+
+      .fill-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: left 0.5s;
+      }
+
+      .fill-btn:hover {
+        background: rgba(255, 255, 255, 0.2);
+        border-color: rgba(255, 255, 255, 0.3);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+      }
+
+      .fill-btn:hover::before {
+        left: 100%;
+      }
+
+      .status {
+        margin-top: 5px;
+        padding: 10px;
+        border-radius: 8px;
+        background: rgba(0, 0, 0, 0.4);
+        border-left: 4px solid transparent;
+        border-image: linear-gradient(180deg, #3a0ca3, #7209b7);
+        border-image-slice: 1;
+        font-size: 13px;
+        font-family: 'Inter', 'Roboto', sans-serif;
+        min-height: 20px;
+        backdrop-filter: blur(6px);
+        color: #f3f3f3;
+      }
+
+
+      .env-section {
+        margin-bottom: 10px;
+        background: rgba(255,255,255,0.1);
+        border-radius: 10px;
+        padding: 15px;
+        border: 1px solid rgba(255,255,255,0.2);
+      }
+
+      .env-title {
+        font-weight: 600;
+        font-size: 14px;
+        text-transform: uppercase;
+        font-family: 'Inter', 'Roboto', sans-serif;
+        letter-spacing: 0.5px;
+        margin-bottom: 10px;
+      }
+
+      .user-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+      }
+
+      .user-btn {
+        background: rgba(255, 255, 255, 0.12);
+        backdrop-filter: blur(10px);
+        color: #ffffff;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 3px 10px;
+        border-radius: 12px;
+        cursor: pointer;
+        font-size: 11px;
+        font-weight: 500;
+        font-family: 'Inter', sans-serif;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+        text-align: center;
+      }
+
+      .user-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: left 0.5s;
+      }
+
+      .user-btn:hover {
+        background: rgba(255, 255, 255, 0.2);
+        border-color: rgba(255, 255, 255, 0.3);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+      }
+
+      .user-btn:hover::before {
+        left: 100%;
+      }
+
+      .user-btn:active {
+        transform: scale(0.98);
+      }
+
+      .progress-bar {
+        width: 100%;
+        height: 4px;
+        background: rgba(255,255,255,0.2);
+        border-radius: 2px;
+        overflow: hidden;
+        margin-top: 8px;
+      }
+
+      .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #4CAF50, #8BC34A);
+        width: 0%;
+        transition: width 0.3s ease;
+      }
+  </style>
+
+
+</head>
+<body>
+    <div class="tab-menu">
+        <div class="tab active" data-tab="login">🔐 Tester Login</div>
+        <div class="tab" data-tab="form">📋 Auto Filler</div>
+    </div>
+    <div id="form" class="tab-content">
+        <div class="icon" style="text-align: center;">📝</div>
+        <h2 style="text-align:center;">Auto Form Filler</h2>
+
+        <!-- ใช้ div ครอบเพื่อจัดปุ่มตรงกลาง -->
+        <div style="display: flex; justify-content: center;">
+            <button id="fillForm" class="fill-btn">กรอกข้อมูล</button>
+        </div>
+        <div style="display: flex; justify-content: center;">
+            <div id="statusform" class="status">พร้อมใช้งาน - เข้าสู่หน้าสร้างหรือแก้ไขผู้รับบริการ</div>
+        </div>
+    </div>
+
+
+    <div id="login" class="tab-content active">
+        <div class="env-section">
+            <div class="env-title">🔧 DEV Environment</div>
+            <div class="user-grid">
+                <button class="user-btn" data-env="DEV" data-user="champ">Champ</button>
+                <button class="user-btn" data-env="DEV" data-user="preaw">Preaw</button>
+                <button class="user-btn" data-env="DEV" data-user="biwbiw">Biwbiw</button>
+                <button class="user-btn" data-env="DEV" data-user="mark">Mark</button>
+                <button class="user-btn" data-env="DEV" data-user="province">ProvinceROI</button>
+                <button class="user-btn" data-env="DEV" data-user="country">Country</button>
+            </div>
+        </div>
+
+        <div class="env-section">
+            <div class="env-title">🧪 SIT Environment</div>
+            <div class="user-grid">
+                <button class="user-btn" data-env="SIT" data-user="champ">Champ</button>
+                <button class="user-btn" data-env="SIT" data-user="preaw">Preaw</button>
+                <button class="user-btn" data-env="SIT" data-user="biwbiw">Biwbiw</button>
+                <button class="user-btn" data-env="SIT" data-user="provincere">ProvinceROI</button>
+                <button class="user-btn" data-env="SIT" data-user="provincebk">ProvinceBK</button>
+                <button class="user-btn" data-env="SIT" data-user="country">Country</button>
+            </div>
+        </div>
+
+        <div class="env-section">
+            <div class="env-title">🔍 UAT Environment</div>
+            <div class="user-grid">
+                <button class="user-btn" data-env="UAT" data-user="champ">Champ</button>
+                <button class="user-btn" data-env="UAT" data-user="preaw">Preaw</button>
+                <button class="user-btn" data-env="UAT" data-user="biwbiw">Biwbiw</button>
+                <button class="user-btn" data-env="UAT" data-user="province">ProvinceROI</button>
+                <button class="user-btn" data-env="UAT" data-user="country">Country</button>
+            </div>
+        </div>
+
+        <div class="env-section">
+            <div class="env-title">🌟 PROD Environment</div>
+            <div class="user-grid">
+                <button class="user-btn" data-env="PROD" data-user="bedrock">Bedrock</button>
+                <button class="user-btn" data-env="PROD" data-user="provincere">ProvinceBK</button>
+            </div>
+        </div>
+
+        <div id="status" class="status">พร้อมใช้งาน - เลือก Environment และ User</div>
+        <div class="progress-bar" id="progressBar" style="display: none;">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <script src="popup.js"></script>
+    </div>    
+    <script src="popup.js"></script>
+</body>
+</html>
